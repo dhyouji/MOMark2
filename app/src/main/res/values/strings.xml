@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">MO Mark II</string>
+    <string-array name="Kategori">
+        <item>Makanan Pembuka</item>
+        <item>Makanan Utama</item>
+        <item>Minuman Penutup</item>
+        <item>Minuman Minuman</item>
+        <item>Lain-Lain</item>
+    </string-array>
+</resources>

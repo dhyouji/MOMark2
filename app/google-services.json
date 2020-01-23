@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "471744790693",
+    "firebase_url": "https://momark2-6ce6a.firebaseio.com",
+    "project_id": "momark2-6ce6a",
+    "storage_bucket": "momark2-6ce6a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:471744790693:android:78e55ae0c40e420efbcd4c",
+        "android_client_info": {
+          "package_name": "tif.gaskeun.masodin2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "471744790693-an6865t447v29uors0i1660lli1a1p3q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "tif.gaskeun.masodin2",
+            "certificate_hash": "1ff56ce5706255753bf1ca2217030730d2940fe6"
+          }
+        },
+        {
+          "client_id": "471744790693-qd27gdcdm9nl8fl404m3boeome7c1739.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOPaXeXUD8FKC_vxC2m9VsNAQExRdAUOE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "471744790693-qd27gdcdm9nl8fl404m3boeome7c1739.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

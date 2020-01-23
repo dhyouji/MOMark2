@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout5"
+    style="@style/FormBase"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
+    android:gravity="center_horizontal">
+
+    <LinearLayout
+        android:id="@+id/linearLayout6"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginBottom="64dp"
+        android:background="@color/colorWhite"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="32dp"
+        android:weightSum="60"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="Tambah Menu" />
+
+        <ImageView
+            android:id="@+id/imgprv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/et_nmMenu"
+            style="@style/ETBase"
+            android:layout_width="match_parent"
+            android:hint="Nama Menu"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/et_descMenu"
+            style="@style/ETBase"
+            android:layout_width="match_parent"
+            android:hint="Deskripsi"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/et_prcMenu"
+            style="@style/ETBase"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="Harga"
+            android:inputType="number" />
+        <EditText
+            android:id="@+id/et_katgMenu"
+            style="@style/ETBase"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="Kategori"
+            android:focusable="false"
+            />
+
+        <Button
+            android:id="@+id/btn_submit"
+            style="@style/PrimBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Submit" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
