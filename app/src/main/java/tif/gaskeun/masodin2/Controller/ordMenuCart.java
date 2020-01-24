@@ -18,6 +18,7 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,6 +28,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import java.sql.Timestamp;
+import java.util.HashMap;
+import java.util.Map;
 
 import tif.gaskeun.masodin2.Iface.ListViewHolder3;
 import tif.gaskeun.masodin2.Model.Order;
@@ -48,9 +53,54 @@ public class ordMenuCart extends AppCompatActivity {
         setContentView(R.layout.activity_ormenu_cart);
         mAuth = FirebaseAuth.getInstance();
 
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        updateUI(currentUser);
+        final String uid = mAuth.getCurrentUser().getUid();
+
+
+        dbref = FirebaseDatabase.getInstance().getReference("DataResto");
+
         etNM = findViewById(R.id.et_nama);
         etKt = findViewById(R.id.et_kontak);
         etMj = findViewById(R.id.et_nmeja);
+        btn_chkout = findViewById(R.id.btn_chkout);
+        btn_chkout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               final String nm,kt,mj,time;
+               nm = etNM.getText().toString();
+               kt = etKt.getText().toString();
+               mj = etMj.getText().toString();
+               time = new String(String.valueOf(new Timestamp(System.currentTimeMillis())));
+
+                dbref.child("Cart").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+                   @Override
+                   public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                       String path = (dbref.child("Transaksi").child(uid).push().getPath()).toString();
+                       FirebaseDatabase.getInstance().getReference(path).child("Menu").setValue(dataSnapshot.getValue());
+
+                       Map<String, Object> info = new HashMap<>();
+                       info.put("/AtasNama",nm);
+                       info.put("/Kontak",kt);
+                       info.put("/NoMeja",mj);
+                       info.put("/WaktuPesan",time);
+                       FirebaseDatabase.getInstance().getReference(path).child("Info").updateChildren(info);
+
+                       dataSnapshot.getRef().removeValue();
+                       etNM.setText("");
+                       etKt.setText("");
+                       etMj.setText("");
+                   }
+
+                   @Override
+                   public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                   }
+               });
+
+                Snackbar.make(findViewById(R.id.btn_chkout),"Pesanan Di Pesan", Snackbar.LENGTH_LONG).show();
+            }
+        });
 
         rlist = findViewById(R.id.ormnlist_rc);
         rlist.setHasFixedSize(true);
@@ -61,10 +111,7 @@ public class ordMenuCart extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
 
-        dbref = FirebaseDatabase.getInstance().getReference("DataResto");
         final String uid = mAuth.getCurrentUser().getUid();
 
         FirebaseRecyclerOptions<Order> options = new FirebaseRecyclerOptions.Builder<Order>().setQuery((dbref.child("Cart").child(uid)), Order.class).build();
