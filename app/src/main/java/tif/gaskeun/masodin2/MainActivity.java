@@ -14,6 +14,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
@@ -40,17 +41,17 @@ public class MainActivity extends AppCompatActivity implements IFirebaseLoadDone
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        dbref = FirebaseDatabase.getInstance().getReference().child("Informasi");
         iFirebaseLoadDone = this;
+        dbref = FirebaseDatabase.getInstance().getReference();
 
-        dbref.child("restoran").addListenerForSingleValueEvent(new ValueEventListener() {
+        dbref.child("Informasi").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                List<Informasi> info = new ArrayList<>();
+                List<Informasi> infox = new ArrayList<>();
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    info.add(snapshot.getValue(Informasi.class));
+                    infox.add(dataSnapshot.getValue(Informasi.class));
                 }
-                iFirebaseLoadDone.onFirebaseLoadSuccess(info);
+                iFirebaseLoadDone.onFirebaseLoadSuccess(infox);
             }
 
             @Override
@@ -64,7 +65,8 @@ public class MainActivity extends AppCompatActivity implements IFirebaseLoadDone
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), ordMenuList.class));
+                String key = "bpBsoBLZKmd3UxOYoPYmLsdsxwi1";
+                startActivity(new Intent(getApplicationContext(), ordMenuList.class).putExtra("Key",key));
             }
         });
 

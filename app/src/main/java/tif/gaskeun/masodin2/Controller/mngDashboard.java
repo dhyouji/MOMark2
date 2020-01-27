@@ -36,12 +36,14 @@ import tif.gaskeun.masodin2.R;
 public class mngDashboard extends AppCompatActivity{
 
     private DatabaseReference dbref;
-    public Button btn_add,btn_del,btn_edit;
+    public Button btn_add,btn_out;
     public RecyclerView rlist;
     RecyclerView.LayoutManager layoutManager;
     ArrayList<Menu> DataDaftarMenu;
     FirebaseAuth mAuth;
     String key;
+    boolean doubleBackToExitPressedOnce = false;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,14 +58,23 @@ public class mngDashboard extends AppCompatActivity{
                 startActivity(new Intent(getApplicationContext(), mngMenuAdd.class).putExtra("Key",key));
             }
         });
-
-        rlist = findViewById(R.id.rcy_list_menu);
+        btn_out = findViewById(R.id.btn_logout);
+        btn_out.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAuth.signOut();
+                finish();
+            }
+        });
+        rlist = findViewById(R.id.rcy_list_menu2);
         rlist.setHasFixedSize(false);
         layoutManager = new LinearLayoutManager(this);
         rlist.setLayoutManager(layoutManager);
 
 //        key = getIntent().getStringExtra("Key");
         key = mAuth.getUid();
+
+
     }
 
     @Override
@@ -115,6 +126,27 @@ public class mngDashboard extends AppCompatActivity{
         };
         rlist.setAdapter(adapter);
         adapter.startListening();
+    }
+
+    @Override
+    public void onBackPressed() {
+//        if (doubleBackToExitPressedOnce) {
+//            super.onBackPressed();
+//            return;
+//        }
+//
+//        this.doubleBackToExitPressedOnce = true;
+//        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+//
+//        new Handler().postDelayed(new Runnable() {
+//
+//            @Override
+//            public void run() {
+//                doubleBackToExitPressedOnce=false;
+//                mAuth.signOut();
+//                finish();
+//            }
+//        }, 200000000);
     }
 
     private void updateUI(final FirebaseUser user) {

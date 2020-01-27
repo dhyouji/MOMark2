@@ -48,17 +48,19 @@ public class ordMenuList extends AppCompatActivity {
     public RecyclerView rlist;
     RecyclerView.LayoutManager layoutManager;
     ArrayList<Menu> DataDaftarMenus;
+    String storeKey;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ormenu_list);
         mAuth = FirebaseAuth.getInstance();
+        storeKey = getIntent().getStringExtra("Key");
 
-        dbref = FirebaseDatabase.getInstance().getReference("DataResto");
+        dbref = FirebaseDatabase.getInstance().getReference(storeKey);
 
 //        dbref.child("DaftarMenu").addValueEventListener(new ValueEventListener() {
-//            @Override
+//            @OverridestoreKey
 //            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 //                final List<String> areas = new ArrayList<>();
 //
@@ -83,7 +85,7 @@ public class ordMenuList extends AppCompatActivity {
         btn_chkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),ordMenuCart.class));
+                startActivity(new Intent(getApplicationContext(),ordMenuCart.class).putExtra("storeKey",storeKey));
             }
         });
 
@@ -126,7 +128,12 @@ public class ordMenuList extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         String KeyX = ((TextView)rlist.findViewHolderForAdapterPosition(position).itemView.findViewById(R.id.list_Key2)).getText().toString();
-                        startActivity(new Intent(getApplicationContext(),ordMenuInfo.class).putExtra("key",KeyX));
+
+                        Bundle extras = new Bundle();
+                        extras.putString("storeKey",storeKey);
+                        extras.putString("itemKey",KeyX);
+
+                        startActivity(new Intent(getApplicationContext(),ordMenuInfo.class).putExtras(extras));
                     }
                 });
                 holder2.itemAdd.setOnClickListener(new View.OnClickListener() {

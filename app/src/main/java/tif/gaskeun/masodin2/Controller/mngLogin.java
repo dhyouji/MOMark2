@@ -53,6 +53,7 @@ public class mngLogin extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             Toast.makeText(mngLogin.this, "SignIn Success", Toast.LENGTH_SHORT).show();
                             String key = mAuth.getUid();
+                            et_passwd.setText("");
                             startActivity(new Intent(getApplicationContext(), mngDashboard.class).putExtra("Key",key));
                         } else {
                             Toast.makeText(mngLogin.this, "Error" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();

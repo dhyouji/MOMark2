@@ -45,6 +45,7 @@ public class ordMenuCart extends AppCompatActivity {
     public Button btn_chkout;
     public RecyclerView rlist;
     RecyclerView.LayoutManager layoutManager;
+    String uid,storeKey;
 
 
     @Override
@@ -55,10 +56,11 @@ public class ordMenuCart extends AppCompatActivity {
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
         updateUI(currentUser);
-        final String uid = mAuth.getCurrentUser().getUid();
+        uid = mAuth.getCurrentUser().getUid();
+        storeKey = getIntent().getStringExtra("storeKey");
 
 
-        dbref = FirebaseDatabase.getInstance().getReference("DataResto");
+        dbref = FirebaseDatabase.getInstance().getReference(storeKey);
 
         etNM = findViewById(R.id.et_nama);
         etKt = findViewById(R.id.et_kontak);

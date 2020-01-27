@@ -14,43 +14,23 @@ public class Informasi {
         this.email = email;
     }
 
-    public String getNamastaff() {
-        return namastaff;
-    }
+    public String getNamastaff() { return namastaff; }
 
-    public void setNamastaff(String namastaff) {
-        this.namastaff = namastaff;
-    }
+    public void setNamastaff(String namastaff) { this.namastaff = namastaff; }
 
-    public String getRestoran() {
-        return restoran;
-    }
+    public String getRestoran() { return restoran; }
 
-    public void setRestoran(String restoran) {
-        this.restoran = restoran;
-    }
+    public void setRestoran(String restoran) { this.restoran = restoran; }
 
-    public String getAlamat() {
-        return alamat;
-    }
+    public String getAlamat() { return alamat; }
 
-    public void setAlamat(String alamat) {
-        this.alamat = alamat;
-    }
+    public void setAlamat(String alamat) { this.alamat = alamat; }
 
-    public String getKontak() {
-        return kontak;
-    }
+    public String getKontak() { return kontak; }
 
-    public void setKontak(String kontak) {
-        this.kontak = kontak;
-    }
+    public void setKontak(String kontak) { this.kontak = kontak; }
 
-    public String getEmail() {
-        return email;
-    }
+    public String getEmail() { return email; }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    public void setEmail(String email) { this.email = email; }
 }

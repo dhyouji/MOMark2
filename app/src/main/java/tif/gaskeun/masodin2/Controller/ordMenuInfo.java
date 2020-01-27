@@ -38,11 +38,12 @@ public class ordMenuInfo extends AppCompatActivity {
         deskpMn = findViewById(R.id.orddetailDeskripsi);
         hargaMn = findViewById(R.id.orddetailHarga);
 
-        final String key = getIntent().getStringExtra("key");
-        assignKey.setText(key);
+        String storeKey = getIntent().getStringExtra("storeKey");
+        String itemKey = getIntent().getStringExtra("itemKey");
+        assignKey.setText(itemKey);
 
-        dbref = FirebaseDatabase.getInstance().getReference("DataResto");
-        dbref.child("DaftarMenu").child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+        dbref = FirebaseDatabase.getInstance().getReference(storeKey);
+        dbref.child("DaftarMenu").child(itemKey).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
