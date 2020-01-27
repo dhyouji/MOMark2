@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout2"
+    style="@style/FormBase"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal">
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:orientation="vertical"
+        android:padding="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="Informasi Tempat Makan" />
+
+        <EditText
+            android:id="@+id/et_namastaff"
+            style="@style/ETBase"
+            android:layout_width="match_parent"
+            android:hint="Nama Staff"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/et_namarestoran"
+            style="@style/ETBase"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nama Tempat Makan"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/et_alamatrestoran"
+            style="@style/ETBase"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Alamat Tempat Makan"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/et_telprestoran"
+            style="@style/ETBase"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="No Telepon"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/et_emailrestoran"
+            style="@style/ETBase"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email Tempat Makan"
+            android:inputType="text" />
+
+        <Button
+            android:id="@+id/bt_submit2"
+            style="@style/PrimBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Submit" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

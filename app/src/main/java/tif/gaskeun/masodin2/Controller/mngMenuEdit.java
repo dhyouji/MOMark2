@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,25 +27,27 @@ import tif.gaskeun.masodin2.R;
 
 public class mngMenuEdit extends AppCompatActivity {
 
-    private DatabaseReference dbref;
+    FirebaseAuth mAuth;
+    DatabaseReference dbref;
     public EditText etNama,etDeskripsi,etHarga,etKatg;
     public Button btnSubmit;
-    public String assignkey;
+    String key,keyItem;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_edit);
-
-        assignkey = getIntent().getStringExtra("key");
+        mAuth = FirebaseAuth.getInstance();
+        key = mAuth.getUid();
+        keyItem = getIntent().getStringExtra("key");
         etNama = findViewById(R.id.et_nmMenu);
         etDeskripsi = findViewById(R.id.et_descMenu);
         etHarga = findViewById(R.id.et_prcMenu);
         etKatg = findViewById(R.id.et_katgMenu);
         btnSubmit = findViewById(R.id.btn_submit);
 
-        dbref = FirebaseDatabase.getInstance().getReference("DataResto");
-        dbref.child("DaftarMenu").child(assignkey).addListenerForSingleValueEvent(new ValueEventListener() {
+        dbref = FirebaseDatabase.getInstance().getReference(key);
+        dbref.child("DaftarMenu").child(keyItem).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
@@ -81,7 +84,7 @@ public class mngMenuEdit extends AppCompatActivity {
     }
 
     private void Submit(Menu menu){
-        dbref.child("DaftarMenu").child(assignkey).setValue(menu).addOnSuccessListener(this, new OnSuccessListener<Void>() {
+        dbref.child("DaftarMenu").child(keyItem).setValue(menu).addOnSuccessListener(this, new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 etNama.setText("");
@@ -94,6 +97,7 @@ public class mngMenuEdit extends AppCompatActivity {
                     @Override
                     public void run() {
                         startActivity(new Intent(getApplicationContext(), mngDashboard.class));
+                        finish();
                     }
                 }, 1000);
             }

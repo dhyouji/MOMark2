@@ -149,7 +149,6 @@ public class ordMenuCart extends AppCompatActivity {
                         String itemKey = ((TextView)rlist.findViewHolderForAdapterPosition(position).itemView.findViewById(R.id.list_Key3)).getText().toString();
                         dbref.child("Cart").child(uid).child(itemKey).removeValue();
                         rlist.getAdapter().notifyDataSetChanged();
-//                        startActivity(new Intent(getApplicationContext(),ordMenuCart.class));
                     }
                 });
             }

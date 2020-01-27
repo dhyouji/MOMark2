@@ -18,6 +18,8 @@
         </activity>
         <activity android:name=".Controller.mngDashboard"/>
         <activity android:name=".Controller.mngLogin"/>
+        <activity android:name=".Controller.mngCreateAcc"/>
+        <activity android:name=".Controller.mngInfoRest"/>
         <activity android:name=".Controller.mngMenuAdd"/>
         <activity android:name=".Controller.mngMenuEdit"/>
         <activity android:name=".Controller.mngMenuInfo"/>

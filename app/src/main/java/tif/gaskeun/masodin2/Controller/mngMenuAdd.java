@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -26,17 +27,22 @@ public class mngMenuAdd extends AppCompatActivity {
     public EditText etNama,etDeskripsi,etHarga;
     public Spinner spnKategori;
     public Button btnSubmit;
+    FirebaseAuth mAuth;
+    String key;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_add);
 
+        mAuth= FirebaseAuth.getInstance();
         etNama = findViewById(R.id.et_nmMenu);
         etDeskripsi = findViewById(R.id.et_descMenu);
         etHarga = findViewById(R.id.et_prcMenu);
         spnKategori = findViewById(R.id.spn_ctgMenu);
         btnSubmit = findViewById(R.id.btn_submit);
+//        key = getIntent().getStringExtra("Key");
+        key = mAuth.getUid();
         dbref = FirebaseDatabase.getInstance().getReference("");
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
@@ -58,7 +64,7 @@ public class mngMenuAdd extends AppCompatActivity {
     }
 
     private void Submit(Menu menu){
-        dbref.child("DataResto").child("DaftarMenu").push().setValue(menu).addOnSuccessListener(this, new OnSuccessListener<Void>() {
+        dbref.child(key).child("DaftarMenu").push().setValue(menu).addOnSuccessListener(this, new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 etNama.setText("");
@@ -71,6 +77,7 @@ public class mngMenuAdd extends AppCompatActivity {
                     @Override
                     public void run() {
                         startActivity(new Intent(getApplicationContext(), mngDashboard.class));
+                        finish();
                     }
                 }, 1000);
             }

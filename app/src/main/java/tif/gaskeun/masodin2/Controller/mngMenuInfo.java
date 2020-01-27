@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,22 +28,25 @@ public class mngMenuInfo extends AppCompatActivity {
     public TextView namaMn,deskpMn,hargaMn,assignKey;
     public Button btnDel,btnEdit;
     public DatabaseReference dbref;
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_info);
 
+        mAuth = FirebaseAuth.getInstance();
         assignKey = findViewById(R.id.testkey);
         namaMn = findViewById(R.id.detailNama);
         deskpMn = findViewById(R.id.detailDeskripsi);
         hargaMn = findViewById(R.id.detailHarga);
 
-        final String key = getIntent().getStringExtra("key");
-        assignKey.setText(key);
+        String key = mAuth.getUid();
+        final String keyItem = getIntent().getStringExtra("key");
+        assignKey.setText(keyItem);
 
-        dbref = FirebaseDatabase.getInstance().getReference("DataResto");
-        dbref.child("DaftarMenu").child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+        dbref = FirebaseDatabase.getInstance().getReference(key).child("DaftarMenu");
+        dbref.child(keyItem).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -64,7 +68,8 @@ public class mngMenuInfo extends AppCompatActivity {
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), mngMenuEdit.class).putExtra("key",key));
+                startActivity(new Intent(getApplicationContext(), mngMenuEdit.class).putExtra("key",keyItem));
+                finish();
             }
         });
 
@@ -72,18 +77,19 @@ public class mngMenuInfo extends AppCompatActivity {
         btnDel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                new AlertDialog.Builder(mngMenuInfo.this).setTitle("Hapus Data").setMessage("Data Akan Di Hapus?")
+                new AlertDialog.Builder(mngMenuInfo.this).setTitle("Hapus "+ namaMn.getText()).setMessage(namaMn.getText() + " Akan Di Hapus?")
                         .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                dbref.child("DaftarMenu").child(key).removeValue();
+                                dbref.child(keyItem).removeValue();
                                 ;
-                                Snackbar.make(getWindow().getDecorView().getRootView(), "Data Berhasil Ditambahkan", Snackbar.LENGTH_LONG).show();
+                                Snackbar.make(getWindow().getDecorView().getRootView(), "Data Berhasil DiHapus", Snackbar.LENGTH_LONG).show();
 
                                 new Handler().postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
                                         startActivity(new Intent(getApplicationContext(), mngDashboard.class));
+                                        finish();
                                     }
                                 }, 1000);
                             }

@@ -15,6 +15,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,17 +40,20 @@ public class mngDashboard extends AppCompatActivity{
     public RecyclerView rlist;
     RecyclerView.LayoutManager layoutManager;
     ArrayList<Menu> DataDaftarMenu;
+    FirebaseAuth mAuth;
+    String key;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+        mAuth = FirebaseAuth.getInstance();
 
         btn_add = findViewById(R.id.btn_addMenu);
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), mngMenuAdd.class));
+                startActivity(new Intent(getApplicationContext(), mngMenuAdd.class).putExtra("Key",key));
             }
         });
 
@@ -53,13 +61,18 @@ public class mngDashboard extends AppCompatActivity{
         rlist.setHasFixedSize(false);
         layoutManager = new LinearLayoutManager(this);
         rlist.setLayoutManager(layoutManager);
+
+//        key = getIntent().getStringExtra("Key");
+        key = mAuth.getUid();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        updateUI(currentUser);
 
-        dbref = FirebaseDatabase.getInstance().getReference("DataResto").child("DaftarMenu");
+        dbref = FirebaseDatabase.getInstance().getReference(key).child("DaftarMenu");
 
         FirebaseRecyclerOptions<Menu> options = new FirebaseRecyclerOptions.Builder<Menu>().setQuery(dbref,Menu.class).build();
         FirebaseRecyclerAdapter<Menu, ListViewHolder1> adapter = new FirebaseRecyclerAdapter<Menu, ListViewHolder1>(options) {
@@ -102,5 +115,21 @@ public class mngDashboard extends AppCompatActivity{
         };
         rlist.setAdapter(adapter);
         adapter.startListening();
+    }
+
+    private void updateUI(final FirebaseUser user) {
+        if(user==null){
+            mAuth.signInAnonymously().addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if(task.isSuccessful()){
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        updateUI(user);
+                    }else {
+                        updateUI(null);
+                    }
+                }
+            });
+        }
     }
 }

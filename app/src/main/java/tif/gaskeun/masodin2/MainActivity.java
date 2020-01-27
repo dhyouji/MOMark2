@@ -6,28 +6,60 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
-import tif.gaskeun.masodin2.Controller.mngDashboard;
+import java.util.ArrayList;
+import java.util.List;
+
+import tif.gaskeun.masodin2.Controller.IFirebaseLoadDone;
 import tif.gaskeun.masodin2.Controller.mngLogin;
 import tif.gaskeun.masodin2.Controller.ordMenuList;
+import tif.gaskeun.masodin2.Model.Informasi;
 
-public class MainActivity extends AppCompatActivity {
+
+public class MainActivity extends AppCompatActivity implements IFirebaseLoadDone {
 
     public Button btnOk;
+    public SearchableSpinner spnRest;
     public TextView login;
+    DatabaseReference dbref;
+    IFirebaseLoadDone iFirebaseLoadDone;
+    List<Informasi> info;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        dbref = FirebaseDatabase.getInstance().getReference().child("Informasi");
+        iFirebaseLoadDone = this;
+
+        dbref.child("restoran").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<Informasi> info = new ArrayList<>();
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    info.add(snapshot.getValue(Informasi.class));
+                }
+                iFirebaseLoadDone.onFirebaseLoadSuccess(info);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        spnRest = findViewById(R.id.spnResto);
         btnOk = findViewById(R.id.btn_ok);
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), ordMenuList.class));
             }
         });
+
         login = findViewById(R.id.login);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,12 +75,21 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), mngLogin.class));
             }
         });
+
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
+    public void onFirebaseLoadSuccess(List<Informasi> informasi) {
+        info = informasi;
+        List<String> resto = new ArrayList<>();
+        for(Informasi informasi1:informasi)
+            resto.add(informasi1.getRestoran());
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,resto);
+        spnRest.setAdapter(adapter);
+    }
+
+    @Override
+    public void onFirebaseLoadFailed(String Message) {
 
     }
 }
