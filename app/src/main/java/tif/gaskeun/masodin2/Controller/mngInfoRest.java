@@ -100,7 +100,8 @@ public class mngInfoRest extends AppCompatActivity {
     }
 
     private void Submit(Informasi informasi) {
-        dbref.child(key).child("Informasi").setValue(informasi);
+//        dbref.child(key).setValue(informasi);
+        dbref.child(key).setValue(informasi);
         }
     }
 
