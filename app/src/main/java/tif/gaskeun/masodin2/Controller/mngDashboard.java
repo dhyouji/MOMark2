@@ -30,6 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import tif.gaskeun.masodin2.Iface.ListViewHolder1;
+import tif.gaskeun.masodin2.MainActivity;
 import tif.gaskeun.masodin2.Model.Menu;
 import tif.gaskeun.masodin2.R;
 
@@ -63,6 +64,7 @@ public class mngDashboard extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 mAuth.signOut();
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 finish();
             }
         });

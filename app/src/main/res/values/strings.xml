@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MO Mark II</string>
+    <string name="app_name">MasOdin</string>
     <string-array name="Kategori">
         <item>Makanan Pembuka</item>
         <item>Makanan Utama</item>
@@ -7,4 +7,6 @@
         <item>Minuman Minuman</item>
         <item>Lain-Lain</item>
     </string-array>
+    <string name="Team">Team Gaskeun Project\n   Mika Hawari Dhiyaulhaq\n   Ade Herawan\n   Dede Yusup\n   Nanda Septa Nugraha</string>
+    <string name="about">MasODIN kepanjangan dari  “Mobile Aplication Service Order Dine In” Merupakan Aplikasi Penjualan atau Biasa Disebut Aplikasi Point of Sale dalan bidang penjualan makanan atau minuman pada suatu restoran atau tempat makan lainya.\n\nAplikasi Mas Odin ini membantu untuk mempermudah proses pemesanan menu manakan di bebagai tempat makan</string>
 </resources>
