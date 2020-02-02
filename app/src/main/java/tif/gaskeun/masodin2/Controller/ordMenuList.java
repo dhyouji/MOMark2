@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,6 +38,7 @@ import java.util.Map;
 
 import tif.gaskeun.masodin2.Iface.ListViewHolder2;
 import tif.gaskeun.masodin2.Model.Menu;
+import tif.gaskeun.masodin2.Model.Order;
 import tif.gaskeun.masodin2.R;
 
 public class ordMenuList extends AppCompatActivity {
@@ -56,7 +58,6 @@ public class ordMenuList extends AppCompatActivity {
         setContentView(R.layout.activity_ormenu_list);
         mAuth = FirebaseAuth.getInstance();
         storeKey = getIntent().getStringExtra("Key");
-
         dbref = FirebaseDatabase.getInstance().getReference(storeKey);
 
 //        dbref.child("DaftarMenu").addValueEventListener(new ValueEventListener() {
@@ -144,16 +145,38 @@ public class ordMenuList extends AppCompatActivity {
                         final String itemName = ((TextView)rlist.findViewHolderForAdapterPosition(position).itemView.findViewById(R.id.list_title2)).getText().toString();
                         final String itemPrice = ((TextView)rlist.findViewHolderForAdapterPosition(position).itemView.findViewById(R.id.list_price2)).getText().toString();
 
+                        Query query1 = dbref.child("Cart").child(uid);
+                        query1.orderByChild("mnID").equalTo(itemKey).addListenerForSingleValueEvent(new ValueEventListener() {
+//                        query1.orderByChild("mnID").addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                if (dataSnapshot.exists()){
+                                    for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                                        String qtyval = snapshot.getValue(Order.class).getMnQty();
+                                        int qtycalc = Integer.parseInt(qtyval) + 1;
+                                        qtyval = String.valueOf(qtycalc);
+                                        dbref.child("Cart").child(uid).child(snapshot.getKey()).child("mnQty").setValue(qtyval);
+                                        Snackbar.make(getWindow().getDecorView().getRootView(),snapshot.getKey(), Snackbar.LENGTH_LONG).show();
+                                    }
+                                }
+                                else{
+                                    String qty = "1";
+                                    Map<String, Object> add = new HashMap<>();
+                                    add.put("/mnID",itemKey);
+                                    add.put("/mnNama",itemName);
+                                    add.put("/mnHarga",itemPrice);
+                                    add.put("/mnQty",qty);
+                                    dbref.child("Cart").child(uid).push().updateChildren(add);
+                                    Snackbar.make(getWindow().getDecorView().getRootView(),itemName + "Di Tambahkan", Snackbar.LENGTH_LONG).show();
+                                }
 
-                        String qty = "1";
-                        Map<String, Object> add = new HashMap<>();
-                        add.put("/mnID",itemKey);
-                        add.put("/mnNama",itemName);
-                        add.put("/mnHarga",itemPrice);
-                        add.put("/mnQty",qty);
-                        dbref.child("Cart").child(uid).push().updateChildren(add);
+                            }
 
-                        Snackbar.make(getWindow().getDecorView().getRootView(),itemName + "Di Tambahkan", Snackbar.LENGTH_LONG).show();
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
                     }
                 });
             }

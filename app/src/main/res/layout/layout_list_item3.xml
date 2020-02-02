@@ -23,10 +23,12 @@
             android:id="@+id/img_border"
             android:layout_width="112dp"
             android:layout_height="112dp"
+            android:layout_marginTop="8dp"
             app:cardCornerRadius="12dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
             app:strokeColor="@color/colorPrimary"
             app:strokeWidth="1dp">
 
@@ -57,9 +59,9 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="8dp"
             android:text="Price"
+            android:textColor="@color/colorBlack"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:textColor="@color/colorBlack"
             app:layout_constraintStart_toEndOf="@+id/img_border"
             app:layout_constraintTop_toBottomOf="@+id/list_title3" />
 
@@ -73,13 +75,14 @@
             app:layout_constraintHorizontal_bias="0.354"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/list_price3"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintVertical_bias="0.26999998" />
 
         <Button
             android:id="@+id/btn_del_item"
             style="@style/PrimBtn"
             android:layout_width="52dp"
             android:layout_height="52dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:backgroundTint="@android:color/holo_red_light"
             android:text="-"
@@ -90,7 +93,38 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/list_price3"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <EditText
+            android:id="@+id/et_ornote"
+            style="@style/ETBase"
+            android:layout_width="330dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:ems="10"
+            android:hint="Note"
+            android:inputType="text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/et_orqty"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/img_border"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <EditText
+            android:id="@+id/et_orqty"
+            style="@style/ETBase"
+            android:layout_width="52dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:ems="10"
+            android:inputType="number"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_del_item"
+            app:layout_constraintVertical_bias="1.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

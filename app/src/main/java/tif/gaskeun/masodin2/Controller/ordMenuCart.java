@@ -91,7 +91,6 @@ public class ordMenuCart extends AppCompatActivity {
                        dataSnapshot.getRef().removeValue();
                        etNM.setText("");
                        etKt.setText("");
-                       etMj.setText("");
                    }
 
                    @Override
@@ -123,6 +122,7 @@ public class ordMenuCart extends AppCompatActivity {
                 final String id = order.getMnID();
                 holder3.itemName.setText(order.getMnNama());
                 holder3.itemPrice.setText(order.getMnHarga());
+                holder3.itemQty.setText(order.getMnQty());
 
                 final Query query = dbref.child("Cart").child(uid).orderByChild("mnID").equalTo(id);
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
