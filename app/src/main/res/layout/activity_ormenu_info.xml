@@ -24,32 +24,34 @@
         android:id="@+id/linearLayout8"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_back"
+        app:layout_constraintBottom_toTopOf="@+id/btn_edit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/detailPic">
 
         <TextView
-            android:id="@+id/ordtestkey"
+            android:id="@+id/testkey"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
             android:text="Nama"
             android:textSize="24dp"
             android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@+id/orddetailNama"
+            app:layout_constraintBottom_toTopOf="@+id/detailNama"
             app:layout_constraintEnd_toStartOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/orddetailNama" />
+            app:layout_constraintTop_toTopOf="@+id/detailNama" />
 
         <TextView
-            android:id="@+id/orddetailNama"
+            android:id="@+id/detailNama"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
             android:text="Nama"
             android:textAlignment="center"
+            android:textColor="@color/colorBlack"
             android:textSize="24sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -69,17 +71,17 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/orddetailNama">
+            app:layout_constraintTop_toBottomOf="@+id/detailNama">
 
             <TextView
-                android:id="@+id/orddetailHarga"
+                android:id="@+id/detailHarga"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
                 android:text="Harga" />
 
             <TextView
-                android:id="@+id/orddetailDeskripsi"
+                android:id="@+id/detailDeskripsi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Deskripsi" />
@@ -89,7 +91,7 @@
 
 
     <Button
-        android:id="@+id/btn_back"
+        android:id="@+id/btn_edit"
         style="@style/PrimBtn"
         android:layout_width="395dp"
         android:layout_height="wrap_content"
@@ -97,6 +99,8 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:text="back"
+        android:textColor="@color/colorBlack"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
