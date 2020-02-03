@@ -39,7 +39,7 @@ public class mngMenuAdd extends AppCompatActivity {
         etNama = findViewById(R.id.et_nmMenu);
         etDeskripsi = findViewById(R.id.et_descMenu);
         etHarga = findViewById(R.id.et_prcMenu);
-        spnKategori = findViewById(R.id.spn_ctgMenu);
+        spnKategori = findViewById(R.id.et_katgMenu);
         btnSubmit = findViewById(R.id.btn_submit);
 //        key = getIntent().getStringExtra("Key");
         key = mAuth.getUid();

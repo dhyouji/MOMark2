@@ -143,15 +143,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/et_prcMenu" />
 
-            <Spinner
-                android:id="@+id/spn_ctgMenu"
+            <EditText
+                android:id="@+id/et_katgMenu"
                 style="@style/ETBase"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:autofillHints="Pilih Kategori"
-                android:entries="@array/Kategori"
+                android:focusable="true"
                 android:inputType="text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

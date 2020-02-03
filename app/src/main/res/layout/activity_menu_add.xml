@@ -144,7 +144,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/et_prcMenu" />
 
             <Spinner
-                android:id="@+id/spn_ctgMenu"
+                android:id="@+id/et_katgMenu"
                 style="@style/ETBase"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
