@@ -78,19 +78,27 @@ public class ordMenuCart extends AppCompatActivity {
                 dbref.child("Cart").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
                    @Override
                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                       String path = (dbref.child("Transaksi").child(uid).push().getPath()).toString();
-                       FirebaseDatabase.getInstance().getReference(path).child("Menu").setValue(dataSnapshot.getValue());
+//                       DatabaseReference push = dbref.child("Transaksi").child(uid).push();
+                       String path = (dbref.child("Transaksi").child(uid).push().getKey());
+                       dbref.child("Transaksi").child(uid).child(path).child("Menu").setValue(dataSnapshot.getValue());
+//                       FirebaseDatabase.getInstance().getReference(path).child("Menu").setValue(dataSnapshot.getValue());
 
                        Map<String, Object> info = new HashMap<>();
-                       info.put("/AtasNama",nm);
-                       info.put("/Kontak",kt);
-                       info.put("/NoMeja",mj);
-                       info.put("/WaktuPesan",time);
-                       FirebaseDatabase.getInstance().getReference(path).child("Info").updateChildren(info);
+                       info.put("/nama",nm);
+                       info.put("/kontak",kt);
+                       info.put("/nmeja",mj);
+                       info.put("/waktu",time);
+                       dbref.child("Transaksi").child(uid).child(path).child("Info").updateChildren(info);
 
                        dataSnapshot.getRef().removeValue();
-                       etNM.setText("");
-                       etKt.setText("");
+                       etMj.setText("");
+
+                       Bundle transaksi = new Bundle();
+                       transaksi.putString("trans",path);
+                       transaksi.putString("key",storeKey);
+
+
+                       startActivity(new Intent(getApplicationContext(),ordMenuChkout.class).putExtras(transaksi));
                    }
 
                    @Override
