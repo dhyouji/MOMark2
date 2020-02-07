@@ -27,20 +27,22 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
+import java.util.Queue;
 
 import tif.gaskeun.masodin2.Iface.ListViewHolder1;
+import tif.gaskeun.masodin2.Iface.ListViewHolder5;
 import tif.gaskeun.masodin2.MainActivity;
 import tif.gaskeun.masodin2.Model.Menu;
+import tif.gaskeun.masodin2.Model.Order2;
 import tif.gaskeun.masodin2.R;
 
 public class mngDashboard extends AppCompatActivity{
 
-    private DatabaseReference dbref;
+    private DatabaseReference dbref,dbref2;
     public Button btn_add,btn_out;
-    public RecyclerView rlist;
-    RecyclerView.LayoutManager layoutManager;
-    ArrayList<Menu> DataDaftarMenu;
+    public RecyclerView rlist, rlist2;
+    public String idtrans,iduser;
+    RecyclerView.LayoutManager layoutManager1,layoutManager2;
     FirebaseAuth mAuth;
     String key;
     boolean doubleBackToExitPressedOnce = false;
@@ -70,12 +72,14 @@ public class mngDashboard extends AppCompatActivity{
         });
         rlist = findViewById(R.id.rcy_list_menu2);
         rlist.setHasFixedSize(false);
-        layoutManager = new LinearLayoutManager(this);
-        rlist.setLayoutManager(layoutManager);
+        rlist2 = findViewById(R.id.rcy_list_trans);
+        rlist2.setHasFixedSize(false);
+        layoutManager1 = new LinearLayoutManager(this);
+        layoutManager2 = new LinearLayoutManager(this);
+        rlist.setLayoutManager(layoutManager1);
+        rlist2.setLayoutManager(layoutManager2);
 
-//        key = getIntent().getStringExtra("Key");
         key = mAuth.getUid();
-
 
     }
 
@@ -126,8 +130,76 @@ public class mngDashboard extends AppCompatActivity{
                 return holder1;
             }
         };
+
+        dbref2 = FirebaseDatabase.getInstance().getReference(key).child("Transaksi");
+        FirebaseRecyclerOptions<Order2> options1 = new FirebaseRecyclerOptions.Builder<Order2>().setQuery(dbref2,Order2.class).build();
+        FirebaseRecyclerAdapter<Order2, ListViewHolder5> adapter1 = new FirebaseRecyclerAdapter<Order2, ListViewHolder5>(options1) {
+            @Override
+            protected void onBindViewHolder(@NonNull final ListViewHolder5 holder2,final int position, @NonNull final Order2 order2) {
+                dbref2.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for(final DataSnapshot snapshot:dataSnapshot.getChildren()){
+
+                            idtrans = (snapshot.getKey());
+                            holder2.itemName.setText(snapshot.getKey());
+                            dbref2.child(idtrans).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    for(DataSnapshot snapshot1:dataSnapshot.getChildren()){
+                                    holder2.itemName.setText(snapshot1.getKey());
+                                    iduser = snapshot1.getKey();
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+
+//                            iduser = holder2.itemName.getText().toString();
+
+                            Query query1 = dbref2.child(idtrans).orderByChild("uid").equalTo(iduser);
+                            query1.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    for(DataSnapshot snapshot1:dataSnapshot.getChildren()){
+//                                        Order2 ord2 = snapshot1.getValue(Order2.class);
+//                                        holder2.itemName.setText(ord2.getWaktu());
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+            }
+
+            @NonNull
+            @Override
+            public ListViewHolder5 onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_list_item1, parent, false);
+                ListViewHolder5 holder5 = new ListViewHolder5(view);
+                return holder5;
+            }
+        };
+
         rlist.setAdapter(adapter);
+        rlist2.setAdapter(adapter1);
         adapter.startListening();
+        adapter1.startListening();
+
+
     }
 
     @Override

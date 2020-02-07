@@ -78,17 +78,17 @@ public class ordMenuCart extends AppCompatActivity {
                 dbref.child("Cart").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
                    @Override
                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                       DatabaseReference push = dbref.child("Transaksi").child(uid).push();
-                       String path = (dbref.child("Transaksi").child(uid).push().getKey());
-                       dbref.child("Transaksi").child(uid).child(path).child("Menu").setValue(dataSnapshot.getValue());
+                       String path = (dbref.child("Transaksi").push().getKey());
+                       dbref.child("Transaksi").child(path).child("Menu").setValue(dataSnapshot.getValue());
 //                       FirebaseDatabase.getInstance().getReference(path).child("Menu").setValue(dataSnapshot.getValue());
 
                        Map<String, Object> info = new HashMap<>();
+                       info.put("/uid",uid);
                        info.put("/nama",nm);
                        info.put("/kontak",kt);
                        info.put("/nmeja",mj);
                        info.put("/waktu",time);
-                       dbref.child("Transaksi").child(uid).child(path).child("Info").updateChildren(info);
+                       dbref.child("Transaksi").child(path).updateChildren(info);
 
                        dataSnapshot.getRef().removeValue();
                        etMj.setText("");
@@ -100,6 +100,28 @@ public class ordMenuCart extends AppCompatActivity {
 
                        startActivity(new Intent(getApplicationContext(),ordMenuChkout.class).putExtras(transaksi));
                    }
+//                   public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                       String path = (dbref.child("Transaksi").child(uid).push().getKey());
+//                       dbref.child("Transaksi").child(uid).child(path).child("Menu").setValue(dataSnapshot.getValue());
+////                       FirebaseDatabase.getInstance().getReference(path).child("Menu").setValue(dataSnapshot.getValue());
+//
+//                       Map<String, Object> info = new HashMap<>();
+//                       info.put("/nama",nm);
+//                       info.put("/kontak",kt);
+//                       info.put("/nmeja",mj);
+//                       info.put("/waktu",time);
+//                       dbref.child("Transaksi").child(uid).child(path).child("Info").updateChildren(info);
+//
+//                       dataSnapshot.getRef().removeValue();
+//                       etMj.setText("");
+//
+//                       Bundle transaksi = new Bundle();
+//                       transaksi.putString("trans",path);
+//                       transaksi.putString("key",storeKey);
+//
+//
+//                       startActivity(new Intent(getApplicationContext(),ordMenuChkout.class).putExtras(transaksi));
+//                   }
 
                    @Override
                    public void onCancelled(@NonNull DatabaseError databaseError) {

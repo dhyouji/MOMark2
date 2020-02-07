@@ -3,12 +3,12 @@ package tif.gaskeun.masodin2.Model;
 import java.io.Serializable;
 
 public class Order2 implements Serializable {
-    private String mnID, mnNama, mnHarga, mnQty,waktu,nama,kontak,nmeja;
+    private String mnID, mnNama, mnHarga, mnQty,waktu,nama,kontak,nmeja,uid;
 
     public Order2() {
     }
 
-    public Order2(String mnID, String mnNama, String mnHarga, String mnQty, String waktu, String nama, String kontak, String nmeja) {
+    public Order2(String mnID, String mnNama, String mnHarga, String mnQty, String waktu, String nama, String kontak, String nmeja, String uid) {
         this.mnID = mnID;
         this.mnNama = mnNama;
         this.mnHarga = mnHarga;
@@ -17,6 +17,7 @@ public class Order2 implements Serializable {
         this.nama = nama;
         this.kontak = kontak;
         this.nmeja = nmeja;
+        this.uid = uid;
     }
 
     public String getMnID() {
@@ -82,4 +83,8 @@ public class Order2 implements Serializable {
     public void setMnQty(String mnQty) {
         this.mnQty = mnQty;
     }
+
+    public String getUid() { return uid; }
+
+    public void setUid(String uid) { this.uid = uid; }
 }

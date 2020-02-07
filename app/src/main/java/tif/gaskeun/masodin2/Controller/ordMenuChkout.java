@@ -95,7 +95,7 @@ public class ordMenuChkout extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        dbref.child("Transaksi").child(uid).child(key).child("Info").addListenerForSingleValueEvent(new ValueEventListener() {
+        dbref.child("Transaksi").child(key).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot snapshot:dataSnapshot.getChildren()) {
@@ -116,7 +116,7 @@ public class ordMenuChkout extends AppCompatActivity {
         rlist.setHasFixedSize(false);
         layoutManager = new LinearLayoutManager(this);
         rlist.setLayoutManager(layoutManager);
-        FirebaseRecyclerOptions<Order2> options = new FirebaseRecyclerOptions.Builder<Order2>().setQuery(dbref.child("Transaksi").child(uid).child(key).child("Menu"),Order2.class).build();
+        FirebaseRecyclerOptions<Order2> options = new FirebaseRecyclerOptions.Builder<Order2>().setQuery(dbref.child("Transaksi").child(key).child("Menu"),Order2.class).build();
         FirebaseRecyclerAdapter<Order2, ListViewHolder4> adapter = new FirebaseRecyclerAdapter<Order2, ListViewHolder4>(options) {
             @Override
             protected void onBindViewHolder(@NonNull ListViewHolder4 holder4, int position, @NonNull Order2 order2) {
@@ -147,15 +147,5 @@ public class ordMenuChkout extends AppCompatActivity {
 
         rlist.setAdapter(adapter);
         adapter.startListening();
-
-//        int total = 0;
-//        for(int i=0;i<adapter.getItemCount();i++){
-//            TextView hargatl = rlist.findViewHolderForAdapterPosition(i).itemView.findViewById(R.id.list_total);
-//            int totalharga = Integer.parseInt(hargatl.getText().toString());
-//            total = total + totalharga;
-//        }
-//        String totalfx = Integer.toString(total);
-//        tvtotal.setText("Rp. "totalfx);
-
     }
 }
