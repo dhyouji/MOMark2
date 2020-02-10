@@ -24,6 +24,7 @@
         <activity android:name=".Controller.mngMenuAdd"/>
         <activity android:name=".Controller.mngMenuEdit"/>
         <activity android:name=".Controller.mngMenuInfo"/>
+        <activity android:name=".Controller.mngTransInfo"/>
         <activity android:name=".Controller.ordMenuList"/>
         <activity android:name=".Controller.ordMenuInfo"/>
         <activity android:name=".Controller.ordMenuCart"/>
