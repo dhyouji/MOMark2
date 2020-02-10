@@ -18,6 +18,7 @@ public class ListViewHolder1 extends RecyclerView.ViewHolder implements View.OnC
 
     public ListViewHolder1(View itemView){
         super(itemView);
+        card = itemView.findViewById(R.id.cvRoot1);
         itemPic = itemView.findViewById(R.id.list_img1);
         itemName = itemView.findViewById(R.id.list_title1);
         itemKey = itemView.findViewById(R.id.list_Key1);

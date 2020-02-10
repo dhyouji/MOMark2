@@ -34,8 +34,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import tif.gaskeun.masodin2.Iface.ListViewHolder3;
+import tif.gaskeun.masodin2.Model.Menu;
 import tif.gaskeun.masodin2.Model.Order;
 import tif.gaskeun.masodin2.R;
+
+import static android.text.TextUtils.isEmpty;
 
 public class ordMenuCart extends AppCompatActivity {
 
@@ -74,8 +77,7 @@ public class ordMenuCart extends AppCompatActivity {
                kt = etKt.getText().toString();
                mj = etMj.getText().toString();
                time = new String(String.valueOf(new Timestamp(System.currentTimeMillis())));
-
-                dbref.child("Cart").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+                        dbref.child("Cart").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
                    @Override
                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                        String path = (dbref.child("Transaksi").push().getKey());
@@ -100,28 +102,6 @@ public class ordMenuCart extends AppCompatActivity {
 
                        startActivity(new Intent(getApplicationContext(),ordMenuChkout.class).putExtras(transaksi));
                    }
-//                   public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                       String path = (dbref.child("Transaksi").child(uid).push().getKey());
-//                       dbref.child("Transaksi").child(uid).child(path).child("Menu").setValue(dataSnapshot.getValue());
-////                       FirebaseDatabase.getInstance().getReference(path).child("Menu").setValue(dataSnapshot.getValue());
-//
-//                       Map<String, Object> info = new HashMap<>();
-//                       info.put("/nama",nm);
-//                       info.put("/kontak",kt);
-//                       info.put("/nmeja",mj);
-//                       info.put("/waktu",time);
-//                       dbref.child("Transaksi").child(uid).child(path).child("Info").updateChildren(info);
-//
-//                       dataSnapshot.getRef().removeValue();
-//                       etMj.setText("");
-//
-//                       Bundle transaksi = new Bundle();
-//                       transaksi.putString("trans",path);
-//                       transaksi.putString("key",storeKey);
-//
-//
-//                       startActivity(new Intent(getApplicationContext(),ordMenuChkout.class).putExtras(transaksi));
-//                   }
 
                    @Override
                    public void onCancelled(@NonNull DatabaseError databaseError) {

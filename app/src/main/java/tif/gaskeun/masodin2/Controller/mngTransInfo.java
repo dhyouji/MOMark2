@@ -51,7 +51,6 @@ public class mngTransInfo extends AppCompatActivity {
 
         String key = mAuth.getUid();
         final String key1 = getIntent().getStringExtra("id1");
-        final String key2 = getIntent().getStringExtra("id2");
 
         dbref = FirebaseDatabase.getInstance().getReference(key);
         dbref.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -72,8 +71,8 @@ public class mngTransInfo extends AppCompatActivity {
             }
         });
 
-        dbref = FirebaseDatabase.getInstance().getReference(key).child("Transaksi");
-        dbref.child(key1).addListenerForSingleValueEvent(new ValueEventListener() {
+        dbref2 = FirebaseDatabase.getInstance().getReference(key).child("Transaksi").child(key1);
+        dbref2.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -83,7 +82,6 @@ public class mngTransInfo extends AppCompatActivity {
                     wktu.setText("Waktu: "+ord.getWaktu());
                     cnct.setText("Kontak: "+ord.getKontak());
                 }
-                ;
             }
 
             @Override

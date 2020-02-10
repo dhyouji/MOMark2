@@ -156,7 +156,7 @@ public class ordMenuList extends AppCompatActivity {
                                         int qtycalc = Integer.parseInt(qtyval) + 1;
                                         qtyval = String.valueOf(qtycalc);
                                         dbref.child("Cart").child(uid).child(snapshot.getKey()).child("mnQty").setValue(qtyval);
-                                        Snackbar.make(getWindow().getDecorView().getRootView(),snapshot.getKey(), Snackbar.LENGTH_LONG).show();
+                                        Snackbar.make(getWindow().getDecorView().getRootView(),itemName + " Di Tambahkan", Snackbar.LENGTH_LONG).show();
                                     }
                                 }
                                 else{
@@ -167,7 +167,7 @@ public class ordMenuList extends AppCompatActivity {
                                     add.put("/mnHarga",itemPrice);
                                     add.put("/mnQty",qty);
                                     dbref.child("Cart").child(uid).push().updateChildren(add);
-                                    Snackbar.make(getWindow().getDecorView().getRootView(),itemName + "Di Tambahkan", Snackbar.LENGTH_LONG).show();
+                                    Snackbar.make(getWindow().getDecorView().getRootView(),itemName + " Di Tambahkan", Snackbar.LENGTH_LONG).show();
                                 }
 
                             }

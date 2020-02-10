@@ -132,125 +132,34 @@ public class mngDashboard extends AppCompatActivity{
         };
 
         dbref2 = FirebaseDatabase.getInstance().getReference(key).child("Transaksi");
-        FirebaseRecyclerOptions<Order2> options1 = new FirebaseRecyclerOptions.Builder<Order2>().setQuery(dbref2,Order2.class).build();
+        FirebaseRecyclerOptions<Order2> options1 = new FirebaseRecyclerOptions.Builder<Order2>().setQuery(dbref2.orderByChild("uid"),Order2.class).build();
         FirebaseRecyclerAdapter<Order2, ListViewHolder5> adapter1 = new FirebaseRecyclerAdapter<Order2, ListViewHolder5>(options1) {
             @Override
             protected void onBindViewHolder(@NonNull final ListViewHolder5 holder2,final int position, @NonNull final Order2 order2) {
-                Query query = dbref2;
+
+                String time = order2.getWaktu();
+                holder2.itemName.setText("No Meja : " + order2.getNmeja() + " - " + order2.getNama() + "(" + order2.getKontak() + ")");
+                Query query = dbref2.orderByChild("waktu").equalTo(time);
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for(DataSnapshot snapshot:dataSnapshot.getChildren()){
-
-                            idtrans = (snapshot.getKey());
-                            holder2.itemName.setText(snapshot.getKey());
-                            dbref2.child(idtrans);
-                            dbref2.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    for (DataSnapshot snapshot1 : dataSnapshot.getChildren()) {
-                                        holder2.itemName.setText(snapshot1.getKey());
-                                        iduser = snapshot1.getKey();
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                }
-                            });
-
-//                            iduser = holder2.itemName.getText().toString();
-
-                            Query query1 = dbref2.child(idtrans).orderByChild("uid").equalTo(iduser);
-                            query1.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    for(DataSnapshot snapshot2:dataSnapshot.getChildren()){
-                                        iniid = snapshot2.getKey();
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                }
-                            });
-
-                            holder2.itemView.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    Bundle bndle = new Bundle();
-                                    bndle.putString("id1", iduser);
-                                    bndle.putString("id2", iniid);
-                                    Intent intent = new Intent(mngDashboard.this, mngTransInfo.class);
-                                    intent.putExtras(bndle);
-                                    startActivity(intent);
-                                }
-                            });
-//                            FirebaseRecyclerAdapter<Order2, ListViewHolder5> adapter1 = new FirebaseRecyclerAdapter<Order2, ListViewHolder5>(options1) {
-//            @Override
-//            protected void onBindViewHolder(@NonNull final ListViewHolder5 holder2,final int position, @NonNull final Order2 order2) {
-//                dbref2.addValueEventListener(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                        for(DataSnapshot snapshot:dataSnapshot.getChildren()){
-//
-//                            idtrans = (snapshot.getKey());
-//                            holder2.itemName.setText(snapshot.getKey());
-//                            dbref2.child(idtrans);
-//                            dbref2.addListenerForSingleValueEvent(new ValueEventListener() {
-//                                @Override
-//                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                                    for (DataSnapshot snapshot1 : dataSnapshot.getChildren()) {
-//                                        holder2.itemName.setText(snapshot1.getKey());
-//                                        iduser = snapshot1.getKey();
-//                                    }
-//                                }
-//
-//                                @Override
-//                                public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//                                }
-//                            });
-//
-////                            iduser = holder2.itemName.getText().toString();
-//
-//                            Query query1 = dbref2.child(idtrans).orderByChild("uid").equalTo(iduser);
-//                            query1.addListenerForSingleValueEvent(new ValueEventListener() {
-//                                @Override
-//                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                                    for(DataSnapshot snapshot2:dataSnapshot.getChildren()){
-//                                        iniid = snapshot2.getKey();
-////                                        Order2 ord = snapshot2.getValue(Order2.class);
-////                                        Order2 ord2 = snapshot1.getValue(Order2.class);
-////                                        holder2.itemName.setText(ord2.getWaktu());
-//                                    }
-//                                }
-//
-//                                @Override
-//                                public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//                                }
-//                            });
-//
-//                            holder2.itemView.setOnClickListener(new View.OnClickListener() {
-//                                @Override
-//                                public void onClick(View v) {
-//                                    Bundle bndle = new Bundle();
-//                                    bndle.putString("id1", iduser);
-//                                    bndle.putString("id2", iniid);
-//                                    Intent intent = new Intent(mngDashboard.this, mngTransInfo.class);
-//                                    intent.putExtras(bndle);
-//                                    startActivity(intent);
-//                                }
-//                            });
+                            idtrans = snapshot.getKey();
+                            holder2.itemKey.setText(idtrans);
                         }
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
 
+                    }
+                });
+
+                holder2.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String idtrs = holder2.itemKey.getText().toString();
+                        startActivity(new Intent(getApplicationContext(),mngTransInfo.class).putExtra("id1",idtrs));
                     }
                 });
             }
